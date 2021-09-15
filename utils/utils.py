@@ -11,11 +11,16 @@ def transpose_date(date, days):
     """ Cloudwatch requires data within last two weeks """
     return date + timedelta(days=days)
 
-def parse_line(row):
+def parse_line(row, limit=False):
+    """ Extract data from a row, it limit is setup restrict data to 2 weeks 
+        and transform till this month.  Data is only recorded up to last month and
+        cloudwatch events only stores data for the last 2 weeks."""
+        
     line = {}
     parsed_date = datetime.strptime(row[0], '%d-%b-%Y')
-    if parsed_date < SIX_WEEKS_AGO or parsed_date > ONE_MONTH_AGO:
-        return
+    if limit:
+        if parsed_date < SIX_WEEKS_AGO or parsed_date > ONE_MONTH_AGO:
+            return
 
     line['date'] = transpose_date(parsed_date, ONE_MONTH)
     
