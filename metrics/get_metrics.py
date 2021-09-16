@@ -2,8 +2,6 @@
 
 import boto3
 
-
-
 NAMESPACE = 'Test Metric'
 METRIC_NAME = 'Phoenix_Park_Temperature'
 DIMENSION_NAME = 'Temperature'
